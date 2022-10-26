@@ -1,4 +1,9 @@
+//#include "so_long.h"
+
 #include <mlx.h>
+#include "libft.h"
+#include "ft_printf.h"
+
 
 typedef struct	s_data {
 	void	*img;
@@ -23,8 +28,9 @@ int	main(void)
 	t_data	img;
 	//void	*mlx;
 	//void	*img;
-	char	*relative_path = "./wall.xpm";
-	char	*relative_path2 = "./floor.xpm";
+	ft_printf("gdsdg%s\n", ft_strdup("barev\n"));
+	char	*relative_path = "./img/wall.xpm";
+	char	*relative_path2 = "./img/floor.xpm";
 	int		img_width;
 	int		img_height;
 

@@ -1,23 +1,38 @@
 
 NAME		=	so_long
 CC			=	cc
-SRCS		=	$(wildcard *.c)
+SRCS		=	$(wildcard *.c libs/*c)
 OBJS		=	$(patsubst %.c, %.o, $(SRCS))
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -I./libs/include
 RM			=	rm -f
+AR			=	ar rcs
+LIBFT       =   libs/libft/libft.a
+PRINTF      =   libs/printf/libftprintf.a
+
+LIBFT_DIR  = libs/libft
+PRINTF_DIR = libs/printf
+
 
 %.o:%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all:$(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(OBJS) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+$(NAME): $(LIBFT) $(PRINTF) $(OBJS) 
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(PRINTF) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+
+$(LIBFT):
+	make -C $(LIBFT_DIR)
+
+$(PRINTF):
+	make -C $(PRINTF_DIR)
 
 clean:
+	make clean -C $(PRINTF_DIR)
 	$(RM) $(OBJS) 
 
-fclean:clean
+fclean: clean
+	make fclean -C $(PRINTF_DIR)
 	$(RM) $(NAME)
 
 re:fclean all
