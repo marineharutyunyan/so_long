@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maharuty <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 20:34:00 by maharuty          #+#    #+#             */
-/*   Updated: 2022/05/06 01:34:40 by maharuty         ###   ########.fr       */
+/*   Updated: 2022/10/27 10:29:52 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
 char	*read_line(int fd, char *old_buff)
 {
@@ -21,7 +21,7 @@ char	*read_line(int fd, char *old_buff)
 	buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buff)
 		return (NULL);
-	while (read_ != 0 && !ft_strchr(old_buff, '\n'))
+	while (read_ != 0 && !ft_strchr_gnl(old_buff, '\n'))
 	{
 		read_ = read(fd, buff, BUFFER_SIZE);
 		if (read_ == -1)
@@ -30,7 +30,7 @@ char	*read_line(int fd, char *old_buff)
 			return (NULL);
 		}
 		buff[read_] = '\0';
-		old_buff = ft_strjoin(old_buff, buff);
+		old_buff = ft_strjoin_gnl(old_buff, buff);
 	}
 	free(buff);
 	return (old_buff);
@@ -76,7 +76,7 @@ char	*after(char *buffer)
 		free(buffer);
 		return (NULL);
 	}
-	after = (char *)malloc(sizeof(char) * (ft_strlen(buffer) - i + 1));
+	after = (char *)malloc(sizeof(char) * (ft_strlen_gnl(buffer) - i + 1));
 	i++;
 	c = 0;
 	while (buffer[i])

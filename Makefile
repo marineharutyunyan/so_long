@@ -5,7 +5,6 @@ SRCS		=	$(wildcard *.c libs/*c)
 OBJS		=	$(patsubst %.c, %.o, $(SRCS))
 CFLAGS		=	-Wall -Wextra -Werror -I./libs/include
 RM			=	rm -f
-AR			=	ar rcs
 LIBFT       =   libs/libft/libft.a
 PRINTF      =   libs/printf/libftprintf.a
 
@@ -29,10 +28,12 @@ $(PRINTF):
 
 clean:
 	make clean -C $(PRINTF_DIR)
+	make clean -C $(LIBFT_DIR)
 	$(RM) $(OBJS) 
 
 fclean: clean
 	make fclean -C $(PRINTF_DIR)
+	make fclean -C $(LIBFT_DIR)
 	$(RM) $(NAME)
 
 re:fclean all

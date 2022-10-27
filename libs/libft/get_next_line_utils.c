@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maharuty <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 21:29:31 by maharuty          #+#    #+#             */
-/*   Updated: 2022/05/06 01:52:57 by maharuty         ###   ########.fr       */
+/*   Updated: 2022/10/27 10:30:10 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 #include <string.h>
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen_gnl(const char *s)
 {
 	size_t	i;
 
@@ -23,7 +23,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strjoin(char *stat, char *buffer)
+char	*ft_strjoin_gnl(char *stat, char *buffer)
 {
 	char	*join;
 	size_t	i;
@@ -39,7 +39,7 @@ char	*ft_strjoin(char *stat, char *buffer)
 	i = -1;
 	c = -1;
 	join = (char *)malloc(sizeof(char)
-			* (ft_strlen(stat) + ft_strlen(buffer) + 1));
+			* (ft_strlen_gnl(stat) + ft_strlen_gnl(buffer) + 1));
 	if (!join)
 		return (NULL);
 	while (stat[++i] != '\0')
@@ -51,7 +51,7 @@ char	*ft_strjoin(char *stat, char *buffer)
 	return (join);
 }
 
-char	*ft_strchr(char *buffer, char c)
+char	*ft_strchr_gnl(char *buffer, char c)
 {
 	size_t	i;
 
