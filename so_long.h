@@ -9,12 +9,31 @@
 
 typedef struct s_mapdata
 {
-	int	weight;
-	int	height;
-	int	player_position;
+	int		weight;
+	int		height;
+	int		player_position;
+	int		current_score;
+	int		score;
+	char	**map;
+	void	*wall;
+	void	*exit;
+	void	*player;
+	void	*space;
+	void	*collectable;
+
 }		t_mapdata;
 
-int	check_rectangule(int len, int rec_len);
-int	check_symbols(char **map, t_mapdata *mapdata);
+typedef struct s_mlxdata
+{
+	void	*img;
+	char	*addr;
+	int		wind_height;
+	int		wind_weight;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_mlxdata;
+
+int	validate_map(char **map, t_mapdata *map_data);
 
 #endif
