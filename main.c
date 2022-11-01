@@ -58,7 +58,7 @@ void	set_window_size(int img_height, int img_width, int *w_height, int *w_width,
 	*w_height = map_data->height * img_height;
 	*w_width = map_data->weight * img_width;
 }
-
+/*
 void	render(char **map, t_mapdata *map_data)
 {
 	t_mlxdata	img;
@@ -80,8 +80,26 @@ void	render(char **map, t_mapdata *map_data)
 	img.img = mlx_xpm_file_to_image(mlx, map_data->wall, &img_width, &img_height);
 	mlx_win = mlx_new_window(mlx, w_width, w_height, "So Long");
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	printf("%d\n", img_height);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 500, 500);
+	mlx_loop(mlx);
+}
+*/
+void	render(char **map, t_mapdata *map_data)
+{
+	t_mlxdata	*mlx_data;
+	void		*mlx;
+	void		*mlx_win;
+	int			img_height;
+	int			img_width;
+
+	mlx_data = malloc(sizeof(t_mlxdata));
+	mlx = mlx_init();
+	mlx_data->img = mlx_xpm_file_to_image(mlx, map_data->space, &img_width, &img_height);
+	set_window_size(img_height, img_width, &mlx_data->wind_height, &mlx_data->wind_weight, map_data);
+	mlx_win = mlx_new_window(mlx, mlx_data->wind_weight, mlx_data->wind_height, "So Long");
+	mlx_put_image_to_window(mlx, mlx_win, mlx_data->img, 0, 0);
+	mlx_data->img = mlx_xpm_file_to_image(mlx, map_data->wall, &img_width, &img_height);
+	mlx_put_image_to_window(mlx, mlx_win, mlx_data->img, 100, 100);
 	mlx_loop(mlx);
 }
 
