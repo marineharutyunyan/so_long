@@ -50,6 +50,9 @@ void	init(t_mapdata *map_data)
 {
 	map_data->space = "./img/floor.xpm";
 	map_data->wall = "./img/wall.xpm";
+	map_data->exit = "./img/exit.xpm";
+	map_data->player = "./img/player.xpm";
+	map_data->collectable = "./img/coin.xpm";
 	map_data->current_score = 0;
 }
 
@@ -91,15 +94,55 @@ void	render(char **map, t_mapdata *map_data)
 	void		*mlx_win;
 	int			img_height;
 	int			img_width;
+	int			i;
+	int			j;
 
 	mlx_data = malloc(sizeof(t_mlxdata));
 	mlx = mlx_init();
-	mlx_data->img = mlx_xpm_file_to_image(mlx, map_data->space, &img_width, &img_height);
+	mlx_data->img = mlx_xpm_file_to_image(mlx, map_data->wall, &img_width, &img_height);
 	set_window_size(img_height, img_width, &mlx_data->wind_height, &mlx_data->wind_weight, map_data);
 	mlx_win = mlx_new_window(mlx, mlx_data->wind_weight, mlx_data->wind_height, "So Long");
-	mlx_put_image_to_window(mlx, mlx_win, mlx_data->img, 0, 0);
-	mlx_data->img = mlx_xpm_file_to_image(mlx, map_data->wall, &img_width, &img_height);
-	mlx_put_image_to_window(mlx, mlx_win, mlx_data->img, 100, 100);
+
+	while (i != map_data->height)
+	{
+		j = 0;
+		while (j != map_data->weight)
+		{
+			if (map[i][j] == '1')
+			{
+				mlx_data->img = mlx_xpm_file_to_image(mlx, map_data->wall, &img_width, &img_height);
+				mlx_put_image_to_window(mlx, mlx_win, mlx_data->img, j * 50, i * 50);
+			}
+			else if (map[i][j] == '0')
+			{
+				mlx_data->img = mlx_xpm_file_to_image(mlx, map_data->space, &img_width, &img_height);
+				mlx_put_image_to_window(mlx, mlx_win, mlx_data->img, j * 50, i * 50);
+			}
+			else if (map[i][j] == 'P')
+			{
+				mlx_data->img = mlx_xpm_file_to_image(mlx, map_data->space, &img_width, &img_height);
+				mlx_put_image_to_window(mlx, mlx_win, mlx_data->img, j * 50, i * 50);
+				mlx_data->img = mlx_xpm_file_to_image(mlx, map_data->player, &img_width, &img_height);
+				mlx_put_image_to_window(mlx, mlx_win, mlx_data->img, j * 50, i * 50);
+			}
+			else if (map[i][j] == 'E')
+			{
+				mlx_data->img = mlx_xpm_file_to_image(mlx, map_data->space, &img_width, &img_height);
+				mlx_put_image_to_window(mlx, mlx_win, mlx_data->img, j * 50, i * 50);
+				mlx_data->img = mlx_xpm_file_to_image(mlx, map_data->exit, &img_width, &img_height);
+				mlx_put_image_to_window(mlx, mlx_win, mlx_data->img, j * 50, i * 50);
+			}
+			else if (map[i][j] == 'C')
+			{
+				mlx_data->img = mlx_xpm_file_to_image(mlx, map_data->space, &img_width, &img_height);
+				mlx_put_image_to_window(mlx, mlx_win, mlx_data->img, j * 50, i * 50);
+				mlx_data->img = mlx_xpm_file_to_image(mlx, map_data->collectable, &img_width, &img_height);
+				mlx_put_image_to_window(mlx, mlx_win, mlx_data->img, j * 50, i * 50);
+			}
+			j++;
+		}
+		i++;
+	}
 	mlx_loop(mlx);
 }
 
