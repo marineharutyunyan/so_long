@@ -15,18 +15,21 @@ typedef struct s_mapdata
 	int		current_score;
 	int		score;
 	char	**map;
-	void	*wall;
-	void	*exit;
-	void	*player;
-	void	*space;
-	void	*collectable;
 
 }		t_mapdata;
 
 typedef struct s_mlxdata
 {
-	void	*img;
+	int		img_weight;
+	int		img_height;
+	void	*wall;
+	void	*exit;
+	void	*player;
+	void	*space;
+	void	*collectable;
 	char	*addr;
+	void	*win;
+	void	*mlx;
 	int		wind_height;
 	int		wind_weight;
 	int		bits_per_pixel;
