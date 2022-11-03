@@ -1,20 +1,20 @@
 #include "so_long.h"
 
-int	is_rectangule(char **map, t_mapdata *map_data)
+int	is_rectangule(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (i != map_data->height)
+	while (i != data->height)
 	{
-		if (ft_strlen(map[i]) != (size_t)map_data->weight)
+		if (ft_strlen(data->map[i]) != (size_t)data->weight)
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-int	check_exit(char **map, t_mapdata *map_data)
+int	check_exit(t_data *data)
 {
 	int	i;
 	int	j;
@@ -22,12 +22,12 @@ int	check_exit(char **map, t_mapdata *map_data)
 
 	i = 0;
 	exit_count = 0;
-	while (i != map_data->height)
+	while (i != data->height)
 	{
 		j = 0;
-		while (map[i][j])
+		while (data->map[i][j])
 		{
-			if (map[i][j] == 'E')
+			if (data->map[i][j] == 'E')
 				exit_count++;
 			j++;
 		}
@@ -38,30 +38,30 @@ int	check_exit(char **map, t_mapdata *map_data)
 	return (0);
 }
 
-int	check_and_set_collectables(char **map, t_mapdata *map_data)
+int	check_and_set_collectables(t_data *data)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	map_data->score = 0;
-	while (i != map_data->height)
+	data->score = 0;
+	while (i != data->height)
 	{
 		j = 0;
-		while (map[i][j])
+		while (data->map[i][j])
 		{
-			if (map[i][j] == 'C')
-				map_data->score++;
+			if (data->map[i][j] == 'C')
+				data->score++;
 			j++;
 		}
 		i++;
 	}
-	if (map_data->score >= 1)
+	if (data->score >= 1)
 		return (1);
 	return (0);
 }
 
-int	check_player(char **map, t_mapdata *map_data)
+int	check_and_set_player(t_data *data)
 {
 	int	i;
 	int	j;
@@ -69,13 +69,17 @@ int	check_player(char **map, t_mapdata *map_data)
 
 	i = 0;
 	player_count = 0;
-	while (i != map_data->height)
+	while (i != data->height)
 	{
 		j = 0;
-		while (map[i][j])
+		while (data->map[i][j])
 		{
-			if (map[i][j] == 'P')
+			if (data->map[i][j] == 'P')
+			{
+				data->player_position_x = j;
+				data->player_position_y = i;
 				player_count++;
+			}
 			j++;
 		}
 		i++;
@@ -85,7 +89,7 @@ int	check_player(char **map, t_mapdata *map_data)
 	return (0);
 }
 
-int	check_walls(char **map, t_mapdata *mapdata)
+int	check_walls(t_data *data)
 {
 	int	i;
 	int	j;
@@ -93,17 +97,17 @@ int	check_walls(char **map, t_mapdata *mapdata)
 
 	i = 0;
 	flag = 0;
-	while (i != mapdata->height)
+	while (i != data->height)
 	{
 		j = 0;
-		while (map[i][j])
+		while (data->map[i][j])
 		{
-			if ((i == 0 || i == mapdata->height) && map[i][j] != '1')
+			if ((i == 0 || i == data->height) && data->map[i][j] != '1')
 				return (0);
-			if ((j == 0 || j == mapdata->weight) && map[i][j] != '1')
+			if ((j == 0 || j == data->weight) && data->map[i][j] != '1')
 				return (0);
-			if (map[i][j] == '0' || map[i][j] == '1'
-				|| map[i][j] == 'P' || map[i][j] == 'E' || map[i][j] == 'C')
+			if (data->map[i][j] == '0' || data->map[i][j] == '1'
+				|| data->map[i][j] == 'P' || data->map[i][j] == 'E' || data->map[i][j] == 'C')
 				flag = 1;
 			else
 				return (0);
@@ -114,22 +118,23 @@ int	check_walls(char **map, t_mapdata *mapdata)
 	return (flag);
 }
 
-int	validate_map(char **map, t_mapdata *map_data)
+int	validate_map(t_data *data)
 {
-	//printf("is map rectangule ?  %d\n", is_rectangule(map, map_data));
-	if (!is_rectangule(map, map_data))
+	//printf("is data->map rectangule ?  %d\n", is_rectangule(data->map, data));
+	if (!is_rectangule(data))
 		return (0);
-	//printf("simbols and walls are valid ?  %d\n", check_walls(map, map_data));
-	if (!check_walls(map, map_data))
+	//printf("simbols and walls are valid ?  %d\n", check_walls(data->map, data));
+	if (!check_walls(data))
 		return (0);
-	//printf("one player exist?  %d\n", check_player(map, map_data));
-	if (!check_player(map, map_data))
+	//printf("one player exist?  %d\n", check_player(data->map, data));
+	if (!check_and_set_player(data))
 		return (0);
-	//printf("at least one exit exist? %d\n", check_exit(map, map_data));
-	if (!check_exit(map, map_data))
+	
+	//printf("at least one exit exist? %d\n", check_exit(data->map, data));
+	if (!check_exit(data))
 		return (0);
-	//printf("colectable exist? %d\n", check_and_set_collectables(map, map_data));
-	if (!check_and_set_collectables(map, map_data))
+	//printf("colectable exist? %d\n", check_and_set_collectables(data->map, data));
+	if (!check_and_set_collectables(data))
 		return (0);
 	return (1);
 }

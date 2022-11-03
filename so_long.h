@@ -7,18 +7,7 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-typedef struct s_mapdata
-{
-	int		weight;
-	int		height;
-	int		player_position;
-	int		current_score;
-	int		score;
-	char	**map;
-
-}		t_mapdata;
-
-typedef struct s_mlxdata
+typedef struct s_data
 {
 	int		img_weight;
 	int		img_height;
@@ -35,8 +24,15 @@ typedef struct s_mlxdata
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}				t_mlxdata;
+	int		weight;
+	int		height;
+	int		player_position_x;
+	int		player_position_y;
+	int		current_score;
+	int		score;
+	char	**map;
+}				t_data;
 
-int	validate_map(char **map, t_mapdata *map_data);
+int	validate_map(t_data *data);
 
 #endif
