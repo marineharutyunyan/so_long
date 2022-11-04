@@ -59,22 +59,15 @@ void	init(t_data *data)
 int	event_handler(int keycode, t_data *data)
 {
 	if (keycode == 0)
-	{
-		if (data->player_position_x > 1)
-		{
-			mlx_put_image_to_window(data->mlx, data->win, data->space, data->player_position_x * data->img_weight, data->player_position_y * data->img_height);
-			data->player_position_x -= 1;
-			mlx_put_image_to_window(data->mlx, data->win, data->player, data->player_position_x * data->img_weight, data->player_position_y * data->img_height);
-			// printf("position is  %d %d\n", data->player_position_y, data->player_position_x);
-			// printf("char is %c\n", data->map[data->player_position_y][data->player_position_x]);
-			// if (data->map[data->player_position_y][data->player_position_x] != '1')
-			// {
-			// 	mlx_put_image_to_window(data->mlx, data->win, data->player, data->player_position_y * data->img_weight, data->player_position_x * data->img_height);
-			// }
-		}
-	}
+		move_left(data);
+	if (keycode == 2)
+		move_right(data);
+	if (keycode == 1)
+		move_down(data);
+	if (keycode == 13)
+		move_up(data);
 	//mlx_destroy_window(data->mlx, data->win);
-	return (0);
+		return (0);
 }
 
 void	render(t_data *data)
@@ -91,7 +84,6 @@ void	render(t_data *data)
 			if (data->map[i][j] == '1')
 				mlx_put_image_to_window(data->mlx, data->win, data->wall, j * data->img_weight, i * data->img_height);
 			else if (data->map[i][j] == '0')
-
 				mlx_put_image_to_window(data->mlx, data->win, data->space, j * data->img_weight, i * data->img_height);
 			else if (data->map[i][j] == 'P')
 			{
@@ -112,7 +104,6 @@ void	render(t_data *data)
 		}
 		i++;
 	}
-	//printf("%d\n", data->current_score);
 	mlx_hook(data->win, 2, 0, event_handler, data);
 	mlx_loop(data->mlx);
 }
@@ -128,6 +119,5 @@ int	main(int argc, char **argv)
 			return (1);
 		init(&data);
 		render(&data);
-		//print_map(&data);
 	}
 }

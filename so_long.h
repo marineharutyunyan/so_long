@@ -33,6 +33,10 @@ typedef struct s_data
 	char	**map;
 }				t_data;
 
-int	validate_map(t_data *data);
+int		validate_map(t_data *data);
+void	move_left(t_data *data);
+void	move_right(t_data *data);
+void	move_down(t_data *data);
+void	move_up(t_data *data);
 
 #endif
