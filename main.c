@@ -66,8 +66,7 @@ int	event_handler(int keycode, t_data *data)
 		move_down(data);
 	if (keycode == 13)
 		move_up(data);
-	//mlx_destroy_window(data->mlx, data->win);
-		return (0);
+	return (0);
 }
 
 void	render(t_data *data)
