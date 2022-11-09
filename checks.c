@@ -107,7 +107,8 @@ int	check_walls(t_data *data)
 			if ((j == 0 || j == data->weight) && data->map[i][j] != '1')
 				return (0);
 			if (data->map[i][j] == '0' || data->map[i][j] == '1'
-				|| data->map[i][j] == 'P' || data->map[i][j] == 'E' || data->map[i][j] == 'C')
+				|| data->map[i][j] == 'P' || data->map[i][j] == 'E'
+					|| data->map[i][j] == 'C')
 				flag = 1;
 			else
 				return (0);
@@ -120,20 +121,14 @@ int	check_walls(t_data *data)
 
 int	validate_map(t_data *data)
 {
-	//printf("is data->map rectangule ?  %d\n", is_rectangule(data->map, data));
 	if (!is_rectangule(data))
 		return (0);
-	//printf("simbols and walls are valid ?  %d\n", check_walls(data->map, data));
 	if (!check_walls(data))
 		return (0);
-	//printf("one player exist?  %d\n", check_player(data->map, data));
 	if (!check_and_set_player(data))
 		return (0);
-	
-	//printf("at least one exit exist? %d\n", check_exit(data->map, data));
 	if (!check_exit(data))
 		return (0);
-	//printf("colectable exist? %d\n", check_and_set_collectables(data->map, data));
 	if (!check_and_set_collectables(data))
 		return (0);
 	return (1);

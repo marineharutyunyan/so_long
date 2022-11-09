@@ -1,16 +1,10 @@
 #include "so_long.h"
 
-void	print_map(t_data *data)
+int	ft_exit(t_data *data)
 {
-	int	i;
-
-	i = 0;
-	printf("Map size is %d x %d\n", data->height, data->weight);
-	while (i != data->height)
-	{
-		ft_printf("%s\n", data->map[i]);
-		i++;
-	}
+	mlx_destroy_window(data->mlx, data->win);
+	exit(0);
+	return (0);
 }
 
 char	**get_map(char	*ber_file, t_data *data)
@@ -66,7 +60,30 @@ int	event_handler(int keycode, t_data *data)
 		move_down(data);
 	if (keycode == 13)
 		move_up(data);
+	if (keycode == 53)
+		ft_exit(data);
 	return (0);
+}
+
+void	drow_map(int i, int j, t_data *data)
+{
+	if (data->map[i][j] == '1')
+		mlx_put_image_to_window(data->mlx, data->win, data->wall,
+			j * data->img_weight, i * data->img_height);
+	else
+	{
+		mlx_put_image_to_window(data->mlx, data->win, data->space,
+			j * data->img_weight, i * data->img_height);
+		if (data->map[i][j] == 'P')
+			mlx_put_image_to_window(data->mlx, data->win, data->player,
+				j * data->img_weight, i * data->img_height);
+		else if (data->map[i][j] == 'E')
+			mlx_put_image_to_window(data->mlx, data->win, data->exit,
+				j * data->img_weight, i * data->img_height);
+		else if (data->map[i][j] == 'C')
+			mlx_put_image_to_window(data->mlx, data->win, data->collectable,
+				j * data->img_weight, i * data->img_height);
+	}
 }
 
 void	render(t_data *data)
@@ -80,30 +97,13 @@ void	render(t_data *data)
 		j = 0;
 		while (j != data->weight)
 		{
-			if (data->map[i][j] == '1')
-				mlx_put_image_to_window(data->mlx, data->win, data->wall, j * data->img_weight, i * data->img_height);
-			else if (data->map[i][j] == '0')
-				mlx_put_image_to_window(data->mlx, data->win, data->space, j * data->img_weight, i * data->img_height);
-			else if (data->map[i][j] == 'P')
-			{
-				mlx_put_image_to_window(data->mlx, data->win, data->space, j * data->img_weight, i * data->img_height);
-				mlx_put_image_to_window(data->mlx, data->win, data->player, j * data->img_weight, i * data->img_height);
-			}
-			else if (data->map[i][j] == 'E')
-			{
-				mlx_put_image_to_window(data->mlx, data->win, data->space, j * data->img_weight, i * data->img_height);
-				mlx_put_image_to_window(data->mlx, data->win, data->exit, j * data->img_weight, i * data->img_height);
-			}
-			else if (data->map[i][j] == 'C')
-			{
-				mlx_put_image_to_window(data->mlx, data->win, data->space, j * data->img_weight, i * data->img_height);
-				mlx_put_image_to_window(data->mlx, data->win, data->collectable, j * data->img_weight, i * data->img_height);
-			}
+			drow_map(i, j, data);
 			j++;
 		}
 		i++;
 	}
 	mlx_hook(data->win, 2, 0, event_handler, data);
+	mlx_hook(data->win, 17, 0, ft_exit, data);
 	mlx_loop(data->mlx);
 }
 
