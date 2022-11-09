@@ -19,6 +19,7 @@ typedef struct s_data
 	char	*addr;
 	void	*win;
 	void	*mlx;
+	int 	moves_count;
 	int		wind_height;
 	int		wind_weight;
 	int		bits_per_pixel;

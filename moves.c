@@ -4,10 +4,8 @@ void	move(int next_x, int next_y, t_data *data)
 {
 	if (data->map[next_y][next_x] != '1' && data->map[next_y][next_x] != 'E')
 	{
-		printf("\nCurrent pixel is %c\n", data->map[data->player_position_y][data->player_position_x]);
-		printf("Next pixel is %c\n", data->map[next_y][next_x]);
-		printf("Current_score %d\n", data->current_score);
-		printf("score %d\n\n", data->score);
+		data->moves_count += 1;
+		printf("You did %d steps\n", data->moves_count);
 		if (data->map[next_y][next_x] == 'C')
 		{
 			data->map[next_y][next_x] = '0';
@@ -22,10 +20,8 @@ void	move(int next_x, int next_y, t_data *data)
 	}
 	if (data->map[next_y][next_x] == 'E' && data->current_score == data->score)
 	{
-		printf("\nNext pixel is %c\n", data->map[next_y][next_x]);
 		mlx_put_image_to_window(data->mlx, data->win, data->space, data->player_position_x * data->img_weight, data->player_position_y * data->img_height);
 		mlx_put_image_to_window(data->mlx, data->win, data->player, next_x * data->img_weight, next_y * data->img_height);
-		printf("game Finished\n");
 		ft_exit(data);
 	}
 }
