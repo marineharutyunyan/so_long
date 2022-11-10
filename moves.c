@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   moves.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maharuty <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/09 18:45:58 by maharuty          #+#    #+#             */
+/*   Updated: 2022/11/09 18:46:00 by maharuty         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 void	move(int next_x, int next_y, t_data *data)
@@ -5,23 +17,25 @@ void	move(int next_x, int next_y, t_data *data)
 	if (data->map[next_y][next_x] != '1' && data->map[next_y][next_x] != 'E')
 	{
 		data->moves_count += 1;
-		printf("You did %d steps\n", data->moves_count);
+		ft_printf("You did %d steps\n", data->moves_count);
 		if (data->map[next_y][next_x] == 'C')
 		{
 			data->map[next_y][next_x] = '0';
 			data->current_score += 1;
 		}
-		mlx_put_image_to_window(data->mlx, data->win, data->space, next_x * data->img_weight, next_y * data->img_height);
-		mlx_put_image_to_window(data->mlx, data->win, data->space, data->player_position_x * data->img_weight, data->player_position_y * data->img_height);
+		drow_one_texture(data->space, next_x, next_y, data);
+		drow_one_texture(data->space, data->player_position_x,
+			data->player_position_y, data);
 		data->player_position_x = next_x;
 		data->player_position_y = next_y;
 		data->map[next_y][next_x] = 'P';
-		mlx_put_image_to_window(data->mlx, data->win, data->player, next_x * data->img_weight, next_y * data->img_height);
+		drow_one_texture(data->player, next_x, next_y, data);
 	}
 	if (data->map[next_y][next_x] == 'E' && data->current_score == data->score)
 	{
-		mlx_put_image_to_window(data->mlx, data->win, data->space, data->player_position_x * data->img_weight, data->player_position_y * data->img_height);
-		mlx_put_image_to_window(data->mlx, data->win, data->player, next_x * data->img_weight, next_y * data->img_height);
+		drow_one_texture(data->space, data->player_position_x,
+			data->player_position_y, data);
+		drow_one_texture(data->player, next_x, next_y, data);
 		ft_exit(data);
 	}
 }

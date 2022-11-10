@@ -1,11 +1,16 @@
-#include "so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maharuty <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/09 18:45:38 by maharuty          #+#    #+#             */
+/*   Updated: 2022/11/09 18:45:43 by maharuty         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int	ft_exit(t_data *data)
-{
-	mlx_destroy_window(data->mlx, data->win);
-	exit(0);
-	return (0);
-}
+#include "so_long.h"
 
 char	**get_map(char	*ber_file, t_data *data)
 {
@@ -29,32 +34,6 @@ char	**get_map(char	*ber_file, t_data *data)
 	if (validate_map(data))
 		return (data->map);
 	return (NULL);
-}
-
-void	set_window_size(t_data *data)
-{
-	data->wind_height = data->height * data->img_height;
-	data->wind_weight = data->weight * data->img_weight;
-}
-
-void	init(t_data *data)
-{
-	data->current_score = 0;
-	data->moves_count = 0;
-	data->mlx = mlx_init();
-	data->space = mlx_xpm_file_to_image(data->mlx, "./img/floor.xpm",
-			&data->img_weight, &data->img_height);
-	set_window_size(data);
-	data->wall = mlx_xpm_file_to_image(data->mlx, "./img/wall.xpm",
-			&data->img_weight, &data->img_height);
-	data->exit = mlx_xpm_file_to_image(data->mlx, "./img/exit.xpm",
-			&data->img_weight, &data->img_height);
-	data->player = mlx_xpm_file_to_image(data->mlx, "./img/player.xpm",
-			&data->img_weight, &data->img_height);
-	data->collectable = mlx_xpm_file_to_image(data->mlx, "./img/coin.xpm",
-			&data->img_weight, &data->img_height);
-	data->win = mlx_new_window(data->mlx, data->wind_weight,
-			data->wind_height, "So Long");
 }
 
 int	event_handler(int keycode, t_data *data)
