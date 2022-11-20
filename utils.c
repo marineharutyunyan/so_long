@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maharuty <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:46:12 by maharuty          #+#    #+#             */
-/*   Updated: 2022/11/09 18:46:17 by maharuty         ###   ########.fr       */
+/*   Updated: 2022/11/20 10:41:07 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@ void	init(t_data *data)
 			&data->img_weight, &data->img_height);
 	data->win = mlx_new_window(data->mlx, data->wind_weight,
 			data->wind_height, "So Long");
+	if (!data->space || !data->wall || !data->exit
+		|| !data->player || !data->collectable)
+	{
+		ft_printf("images not found\n");
+		ft_exit(data);
+	}
 }
 
 int	check_walls(t_data *data)

@@ -75,4 +75,5 @@ size_t	ft_strlen_gnl(const char *s);
 char	*ft_strjoin_gnl(char *stat, char *buffer);
 char	*ft_strchr_gnl(char *buffer, char c);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+int		free_arr(void *ptr);
 #endif

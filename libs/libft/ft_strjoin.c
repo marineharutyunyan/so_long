@@ -24,7 +24,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	{
 		if (!s1)
 			return (ft_strdup(s2));
-		else
+		else if (!free_arr((char *)s1))
 			return (ft_strdup(s1));
 	}
 	s1_len = ft_strlen(s1);
@@ -34,5 +34,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	ft_strlcpy(newstr, s1, s1_len + 1);
 	ft_strlcat(newstr + (s1_len), s2, s2_len + 1);
+	free((char *)s1);
+	free((char *)s2);
 	return (newstr);
 }

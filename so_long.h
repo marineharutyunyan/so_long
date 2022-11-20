@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:46:43 by maharuty          #+#    #+#             */
-/*   Updated: 2022/11/09 18:57:44 by maharuty         ###   ########.fr       */
+/*   Updated: 2022/11/20 11:46:33 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	init(t_data *data);
 int		check_walls(t_data *data);
 void	drow_one_texture(void *texture, int x, int y, t_data *data);
 int		validate_map(t_data *data);
+int		check_file_extention(char *ber_file);
 int		ft_exit(t_data *data);
 
 #endif

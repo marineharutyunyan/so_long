@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maharuty <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:45:38 by maharuty          #+#    #+#             */
-/*   Updated: 2022/11/09 18:45:43 by maharuty         ###   ########.fr       */
+/*   Updated: 2022/11/20 14:57:26 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,22 @@ char	**get_map(char	*ber_file, t_data *data)
 	fd = open(ber_file, O_RDONLY);
 	line = get_next_line(fd);
 	buffer = line;
-	data->height = 0;
-	while (buffer != NULL)
-	{	
-		data->height++;
-		buffer = get_next_line(fd);
-		line = ft_strjoin(line, buffer);
+	if (line)
+	{
+		data->height = 0;
+		while (buffer != NULL)
+		{	
+			data->height++;
+			buffer = get_next_line(fd);
+			line = ft_strjoin(line, buffer);
+		}
+		close(fd);
+		data->map = ft_split(line, '\n');
+		data->weight = ft_strlen(data->map[0]);
+		free(line);
+		if (validate_map(data))
+			return (data->map);
 	}
-	close(fd);
-	data->map = ft_split(line, '\n');
-	data->weight = ft_strlen(data->map[0]);
-	if (validate_map(data))
-		return (data->map);
 	return (NULL);
 }
 
@@ -99,13 +103,17 @@ int	main(int argc, char **argv)
 
 	if (argc > 1)
 	{
-		data.map = get_map(argv[1], &data);
-		if (data.map == NULL)
+		if (check_file_extention(argv[1]))
 		{
-			ft_printf("\nSomething went wrong!\n");
-			return (0);
+			data.map = get_map(argv[1], &data);
+			if (data.map == NULL)
+			{
+				ft_printf("Something went wrong!\n");
+				return (0);
+			}
+			init(&data);
+			render(&data);
 		}
-		init(&data);
-		render(&data);
 	}
+	return (0);
 }
