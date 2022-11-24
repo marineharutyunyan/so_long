@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maharuty <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:46:25 by maharuty          #+#    #+#             */
-/*   Updated: 2022/11/09 18:46:27 by maharuty         ###   ########.fr       */
+/*   Updated: 2022/11/24 10:59:23 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	is_rectangule(t_data *data)
 	int	i;
 
 	i = 0;
+	if (data->weight < 6 || data->height < 3)
+		return (0);
 	while (i != data->height)
 	{
 		if (ft_strlen(data->map[i]) != (size_t)data->weight)

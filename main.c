@@ -6,11 +6,24 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:45:38 by maharuty          #+#    #+#             */
-/*   Updated: 2022/11/20 14:57:26 by maharuty         ###   ########.fr       */
+/*   Updated: 2022/11/24 11:38:29 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	generate_map(t_data *data, char *line, int fd, char *buffer)
+{
+	while (buffer != NULL)
+	{	
+		data->height++;
+		buffer = get_next_line(fd);
+		line = ft_strjoin(line, buffer);
+	}
+	data->map = ft_split(line, '\n');
+	data->weight = ft_strlen(data->map[0]);
+	free(line);
+}
 
 char	**get_map(char	*ber_file, t_data *data)
 {
@@ -19,40 +32,20 @@ char	**get_map(char	*ber_file, t_data *data)
 	char		*buffer;
 
 	fd = open(ber_file, O_RDONLY);
-	line = get_next_line(fd);
-	buffer = line;
-	if (line)
+	if (fd != -1)
 	{
-		data->height = 0;
-		while (buffer != NULL)
-		{	
-			data->height++;
-			buffer = get_next_line(fd);
-			line = ft_strjoin(line, buffer);
+		line = get_next_line(fd);
+		buffer = line;
+		if (line)
+		{
+			data->height = 0;
+			generate_map(data, line, fd, buffer);
+			close(fd);
+			if (validate_map(data))
+				return (data->map);
 		}
-		close(fd);
-		data->map = ft_split(line, '\n');
-		data->weight = ft_strlen(data->map[0]);
-		free(line);
-		if (validate_map(data))
-			return (data->map);
 	}
 	return (NULL);
-}
-
-int	event_handler(int keycode, t_data *data)
-{
-	if (keycode == 0)
-		move_left(data);
-	if (keycode == 2)
-		move_right(data);
-	if (keycode == 1)
-		move_down(data);
-	if (keycode == 13)
-		move_up(data);
-	if (keycode == 53)
-		ft_exit(data);
-	return (0);
 }
 
 void	drow_map(int i, int j, t_data *data)

@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:46:43 by maharuty          #+#    #+#             */
-/*   Updated: 2022/11/20 11:46:33 by maharuty         ###   ########.fr       */
+/*   Updated: 2022/11/24 11:38:56 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	move_down(t_data *data);
 void	move_up(t_data *data);
 void	init(t_data *data);
 int		check_walls(t_data *data);
+int		event_handler(int keycode, t_data *data);
 void	drow_one_texture(void *texture, int x, int y, t_data *data);
 int		validate_map(t_data *data);
 int		check_file_extention(char *ber_file);

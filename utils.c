@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:46:12 by maharuty          #+#    #+#             */
-/*   Updated: 2022/11/20 10:41:07 by maharuty         ###   ########.fr       */
+/*   Updated: 2022/11/24 11:39:54 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,37 +51,23 @@ void	init(t_data *data)
 	}
 }
 
-int	check_walls(t_data *data)
-{
-	int	i;
-	int	j;
-	int	flag;
-
-	i = -1;
-	flag = 0;
-	while (++i != data->height)
-	{
-		j = 0;
-		while (data->map[i][j])
-		{
-			if ((i == 0 || i == data->height) && data->map[i][j] != '1')
-				return (0);
-			if ((j == 0 || j == data->weight) && data->map[i][j] != '1')
-				return (0);
-			if (data->map[i][j] == '0' || data->map[i][j] == '1'
-				|| data->map[i][j] == 'P' || data->map[i][j] == 'E'
-					|| data->map[i][j] == 'C')
-				flag = 1;
-			else
-				return (0);
-			j++;
-		}
-	}
-	return (flag);
-}
-
 void	drow_one_texture(void *texture, int x, int y, t_data *data)
 {
 	mlx_put_image_to_window(data->mlx, data->win, texture, x * data->img_weight,
 		y * data->img_height);
+}
+
+int	event_handler(int keycode, t_data *data)
+{
+	if (keycode == 0)
+		move_left(data);
+	if (keycode == 2)
+		move_right(data);
+	if (keycode == 1)
+		move_down(data);
+	if (keycode == 13)
+		move_up(data);
+	if (keycode == 53)
+		ft_exit(data);
+	return (0);
 }
